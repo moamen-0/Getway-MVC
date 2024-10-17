@@ -1,0 +1,73 @@
+﻿@model SignInViewModel
+
+@{
+    ViewData["Title"] = "SignIn";
+    Layout = "~/Views/Shared/_AuthLayout.cshtml";
+}
+
+<form asp-action="SignIn" method="post" class="login100-form validate-form">
+
+
+	<span class="login100-form-title">
+		User Login
+	</span>
+
+
+	<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+		<input class="input100" asp-for="@Model.Email" placeholder="Email">
+		<span class="focus-input100"></span>
+		<span class="symbol-input100">
+			<i class="fa fa-envelope" aria-hidden="true"></i>
+		</span>
+	</div>
+
+	<div class="wrap-input100 validate-input" data-validate="Password is required">
+		<input class="input100"  placeholder="Password" asp-for="@Model.Password">
+		<span class="focus-input100"></span>
+		<span class="symbol-input100">
+			<i class="fa fa-lock" aria-hidden="true"></i>
+		</span>
+	</div>
+	<div class="wrap-input100 validate-input text-center" >
+		<input   placeholder="Password" asp-for="@Model.RememberMe" > 
+		<label asp-for="@Model.RememberMe"> Remember Me</label>
+	</div>
+
+	<div class="container-login100-form-btn">
+		<input type="submit" value="Login" class="login100-form-btn" />
+	</div>
+	
+	<div asp-validation-summary="All"  class = "text-danger mt-3">
+
+	</div>
+
+	<div class="text-center p-t-12">
+		
+		<a class="txt2" asp-action="ForgetPassword">
+			Forgot Password?
+		</a>
+	</div>
+
+	
+
+
+	<div class=" text-center p-t-100 ">
+	
+			<a class="txt2" asp-action="StudentSignUp">
+			<i class="fa fa-graduation-cap" aria-hidden="true"></i>
+				Create Student Account
+				<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+			</a>
+
+			<br />
+			<br />
+
+			<a class="txt2" asp-action="InstructorSignUp">
+			<i class="fa fa-university" aria-hidden="true"></i>
+				Create Instructor Account
+				<i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+			</a>
+
+	</div>
+</form>
+
