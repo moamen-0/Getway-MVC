@@ -17,9 +17,9 @@
             <div class="col-lg-8">
                 <img src="~/files/images/@Model.Thumbnail" class="img-fluid" alt="">
                 <h3>@Model.Name</h3>
-                <p>
+                <pre>
                    @Model.Description
-                </p>
+                </pre>
             </div>
             <div class="col-lg-4">
 
@@ -39,12 +39,20 @@
                     <h5>Duration</h5>
                     <p>@Model.Duration Hrs</p>
                 </div>
-
-                @if (ViewBag.isEnrolled)
+                @if (User.Identity.IsAuthenticated)
                 {
-                    <div class="d-flex justify-content-center align-items-center ">
-                        <a style="pointer-events: none; " asp-action="Enroll" asp-route-Id="@Model.Id" class="btn btn-secondary text-white">Enroll</a>
-                    </div>
+                    @if (ViewBag.isEnrolled)
+                    {
+                        <div class="d-flex justify-content-center align-items-center ">
+                            <a style="pointer-events: none; " asp-action="Enroll" asp-route-Id="@Model.Id" class="btn btn-secondary text-white">Enrolled</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="d-flex justify-content-center align-items-center ">
+                            <a asp-action="Enroll" asp-route-Id="@Model.Id" class="btn btn-success text-white">Enroll</a>
+                        </div>
+                    }
                 }
                 else
                 {
@@ -52,6 +60,7 @@
                         <a asp-action="Enroll" asp-route-Id="@Model.Id" class="btn btn-success text-white">Enroll</a>
                     </div>
                 }
+
               
             </div>
         </div>

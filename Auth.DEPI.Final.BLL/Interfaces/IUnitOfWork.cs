@@ -12,5 +12,6 @@ namespace Auth.DEPI.Final.BLL.Interfaces
         public IInstructorRepository InstructorRepository { get;  }
         public IStudentRepository StudentRepository { get;  }
         public IStudentCourseRepository StudentCourseRepository { get;  }
+        public IVideoRepository VideoRepository { get;  }
     }
 }

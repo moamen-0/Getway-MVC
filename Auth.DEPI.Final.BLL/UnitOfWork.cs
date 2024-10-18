@@ -16,6 +16,7 @@ namespace Auth.DEPI.Final.BLL
         private ICourseRepository _courseRepository;
         private IStudentRepository _studentRepository;
         private IStudentCourseRepository _studentCourseRepository;
+        private IVideoRepository _videoRepository;
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -24,11 +25,14 @@ namespace Auth.DEPI.Final.BLL
             _courseRepository = new CoursesRepository(context);
             _studentRepository = new StudentRepository(context);
             _studentCourseRepository = new StudentCourseRepository(context);
+            _videoRepository = new VideoRepository(context);
         }
         public ICourseRepository CourseRepository => _courseRepository;
         public IInstructorRepository InstructorRepository => _instructorRepository;
         public IStudentRepository StudentRepository => _studentRepository;
 
         public IStudentCourseRepository StudentCourseRepository => _studentCourseRepository;
+
+        public IVideoRepository VideoRepository => _videoRepository;
     }
 }

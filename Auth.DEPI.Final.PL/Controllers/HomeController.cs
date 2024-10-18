@@ -39,6 +39,11 @@ namespace Auth.DEPI.Final.PL.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            if (User.IsInRole("Instructor"))
+            {
+                // Redirect to the Dashboard action if the user is an Instructor
+                return RedirectToAction("index", "Instructor");
+            }
 
             var courses = await _unitOfWork.CourseRepository.GetAllAsync();
             var instructors = await _unitOfWork.InstructorRepository.GetAllAsync();
@@ -88,17 +93,23 @@ namespace Auth.DEPI.Final.PL.Controllers
                 var Result = _mapper.Map<CoursesViewModel>(course);
                 
                 
-                var user = await _userManager.GetUserAsync(User); // Get the logged-in user
+               if(User.Identity.IsAuthenticated)
+               {
+                    var user = await _userManager.GetUserAsync(User); // Get the logged-in user
 
-                var student = await _unitOfWork.StudentRepository.GetAsync(user.Id); // Assuming user.Id is the StudentId
-                
-                
-                var isEnrolled = _context.StudentCourses
-                .Any(sc => sc.StudentId == student.Id && sc.CourseId == course.Id);
+                    var student = await _unitOfWork.StudentRepository.GetAsync(user.Id); // Assuming user.Id is the StudentId
 
 
-                ViewBag.isEnrolled = isEnrolled;
+                    var isEnrolled = _context.StudentCourses
+                    .Any(sc => sc.StudentId == student.Id && sc.CourseId == course.Id);
+
+
+                    ViewBag.isEnrolled = isEnrolled;
+                    return View(Result);
+
+               }
                 return View(Result);
+
             }
             ModelState.AddModelError(string.Empty, "Something went Wrong");
 
@@ -136,17 +147,6 @@ namespace Auth.DEPI.Final.PL.Controllers
                 return NotFound();
             }
 
-            // Check if the student is already enrolled in the course
-            var isEnrolled = _context.StudentCourses
-                 .Any(sc => sc.StudentId == student.Id && sc.CourseId == course.Id);
-
-
-
-            if (isEnrolled)
-            {
-                return BadRequest("You are already enrolled in this course.");
-            }
-
             // Link student to course
             var studentCourse = new StudentCourses
             {
@@ -156,8 +156,7 @@ namespace Auth.DEPI.Final.PL.Controllers
                 Course = course
             };
 
-            _context.StudentCourses.Add(studentCourse);
-            await _context.SaveChangesAsync();
+            await _unitOfWork.StudentCourseRepository.AddAsync(studentCourse);    
 
             return RedirectToAction(nameof(EnrolledCourses));
         }
@@ -179,11 +178,7 @@ namespace Auth.DEPI.Final.PL.Controllers
             }
 
             // Get the enrolled courses for the student
-            var enrolledCourses = await _context.StudentCourses
-                .Where(sc => sc.StudentId == student.Id)
-                .Include(sc => sc.Course)
-                .Include(sc=>sc.Course.Instructor)// Include related Course entity
-                .ToListAsync();
+            var enrolledCourses = await _unitOfWork.StudentCourseRepository.GetStudentCoursesAsync(student.Id);
 
             var result = _mapper.Map<IEnumerable<CoursesViewModel>>(enrolledCourses.Select(sc => sc.Course));
 

@@ -16,18 +16,18 @@ namespace Auth.DEPI.Final.PL.Controllers
         }
 
  
-        public IActionResult Profile(string studentId)
-        {
+        //public IActionResult Profile(string studentId)
+        //{
             
-            var student = _context.Student.FirstOrDefault(s => s.Id == studentId);
+        //    var student = _context.Student.FirstOrDefault(s => s.Id == studentId);
 
-            if (student == null)
-            {
-                return NotFound(); 
-            }
+        //    if (student == null)
+        //    {
+        //        return NotFound(); 
+        //    }
 
         
-            return View(student);
-        }
+        //    return View(student);
+        //}
     }
 }
