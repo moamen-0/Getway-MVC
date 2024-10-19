@@ -1,4 +1,4 @@
-﻿namespace OnlineLearningPlatform.Models
+﻿namespace Auth.DEPI.Final.DAL.Entities
 {
     public class Video
     {

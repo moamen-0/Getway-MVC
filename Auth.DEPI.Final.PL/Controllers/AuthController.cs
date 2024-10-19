@@ -4,7 +4,7 @@ using Auth.DEPI.Final.PL.Helpers;
 using Auth.DEPI.Final.PL.ViewModels.AuthViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OnlineLearningPlatform.Models;
+using Auth.DEPI.Final.DAL.Entities;
 using System.Reflection.Metadata;
 using System.Security.Policy;
 

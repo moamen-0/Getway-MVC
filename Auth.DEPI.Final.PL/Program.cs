@@ -5,6 +5,7 @@ using Auth.DEPI.Final.DAL.Data.Context;
 using Auth.DEPI.Final.DAL.Entities;
 using Auth.DEPI.Final.PL.Mapping.CoursesMapping;
 using Auth.DEPI.Final.PL.Mapping.InstructorMapping;
+using Auth.DEPI.Final.PL.Mapping.VideoMapping;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -43,6 +44,7 @@ namespace Auth.DEPI.Final.PL
 
             builder.Services.AddAutoMapper(M => M.AddProfile(new CourseProfile()));
             builder.Services.AddAutoMapper(M => M.AddProfile(new InstructorProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new VideoProfile()));
 
 
             var app = builder.Build();

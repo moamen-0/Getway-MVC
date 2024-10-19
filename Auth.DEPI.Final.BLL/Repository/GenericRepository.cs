@@ -2,7 +2,7 @@
 using Auth.DEPI.Final.DAL.Data.Context;
 using Auth.DEPI.Final.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using OnlineLearningPlatform.Models;
+using Auth.DEPI.Final.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

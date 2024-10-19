@@ -1,4 +1,4 @@
-﻿using OnlineLearningPlatform.Models;
+﻿using Auth.DEPI.Final.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +9,6 @@ namespace Auth.DEPI.Final.BLL.Interfaces
 {
     public interface IVideoRepository : IGenericRepository<Video>
     {
+       Task< IEnumerable<Video>> GetAllCourseVideosAsync(string? courseId);
     }
 }

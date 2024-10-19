@@ -1,0 +1,50 @@
+﻿@model CoursesViewModel
+@{
+    ViewData["Title"] = "CreateCourse";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<form method="post" asp-action="CreateCourse" enctype="multipart/form-data">
+
+
+    <div class="row mb-3">
+        <label asp-for="Name" class="col-sm-2 col-form-label">Title</label>
+        <div class="col-sm-10">
+            <input asp-for="Name" type="text" class="form-control">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="Description" class="col-sm-2 col-form-label">Description</label>
+        <div class="col-sm-10">
+            <textarea asp-for="Description" class="form-control" style="height: 100px"></textarea>
+        </div>
+    </div>
+
+    
+
+    <div class="row mb-3">
+        <label asp-for="Duration" class="col-sm-2 col-form-label">Duration</label>
+        <div class="col-sm-10">
+            <input asp-for="Duration" type="number" class="form-control">
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label asp-for="CourseImage" class="col-sm-2 col-form-label" required>Thumbnail</label>
+        <div class="col-sm-10">
+            <input asp-for="CourseImage" name="CourseImage" type="file" accept="image/*" id="imgFile"> <!-- Ensure name is "Thumbnail" -->
+        </div>
+    </div>
+  
+
+  
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-center">
+            <input type="submit" class="btn btn-primary" value="Create Course"/>
+            <a asp-action="Index" asp-controller="Instructor" class="btn btn-danger ms-3" style="margin-left: 20px;">Cancel</a>
+        </div>
+    </div>
+</form>
+
+

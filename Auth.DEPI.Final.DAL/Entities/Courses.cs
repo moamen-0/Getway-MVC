@@ -1,15 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace OnlineLearningPlatform.Models
+namespace Auth.DEPI.Final.DAL.Entities
 {
     public class Courses
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }= Guid.NewGuid().ToString(); 
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public int Price { get; set; }
         public int Duration { get; set; }
     
         public string? Thumbnail { get; set; }

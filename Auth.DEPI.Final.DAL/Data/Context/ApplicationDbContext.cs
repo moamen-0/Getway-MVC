@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using OnlineLearningPlatform.Models;
+using Auth.DEPI.Final.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +43,7 @@ namespace Auth.DEPI.Final.DAL.Data.Context
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
         public DbSet<Courses> Courses { get; set; }
+        public DbSet<Video> Videos { get; set; }
         public DbSet<StudentCourses> StudentCourses { get; set; }
 
     }

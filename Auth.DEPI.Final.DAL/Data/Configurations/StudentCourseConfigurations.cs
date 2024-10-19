@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using OnlineLearningPlatform.Models;
+using Auth.DEPI.Final.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

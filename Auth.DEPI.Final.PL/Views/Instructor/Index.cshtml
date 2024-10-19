@@ -1,8 +1,38 @@
-﻿
+﻿@model IEnumerable<CoursesViewModel>
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
 }
 
 <h1>Index</h1>
 
+<div class="d-flex justify-content-between align-items-center mb-3">
+	<h1>Courses</h1>
+	<a asp-action="CreateCourse" class="btn btn-success">Add Course</a>
+
+</div>
+<table class="table table-hover">
+	<tr>
+		<td style="text-align: center; vertical-align: middle;">Cover</td>
+		<td style="text-align: center; vertical-align: middle;">Name</td>
+		<td style="text-align: center; vertical-align: middle;">Id</td>
+		<td style="text-align: center; vertical-align: middle;">Description</td>
+		<td style="text-align: center; vertical-align: middle;">Date</td>
+		<td style="text-align: center; vertical-align: middle;">Actions</td>
+	</tr>
+	@foreach (var item in Model)
+	{
+		<tr>
+			<td><img src="~/files/images/@item.Thumbnail" width="70" height="70" alt="Course Thumbnail" class="img-thumbnail" /></td>
+			<td style="text-align: center; vertical-align: middle;">@item.Name</td>
+			<td style="text-align: center; vertical-align: middle;">@item.Id</td>
+			<td style="text-align: center; vertical-align: middle;">@item.Description</td>
+			<td style="text-align: center; vertical-align: middle;">@item.Created</td>
+			<td style="text-align: center; vertical-align: middle;">
+				<a class="btn btn-success" asp-action="Edit" asp-route-Id="@item.Id">Edit</a>
+				<a class="btn btn-danger" asp-action="Delete" asp-route-Id="@item.Id">Delete</a>
+			</td>
+
+		</tr>
+	}
+</table>

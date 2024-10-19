@@ -1,6 +1,6 @@
 ﻿using Auth.DEPI.Final.PL.ViewModels.HomeViewModels;
 using AutoMapper;
-using OnlineLearningPlatform.Models;
+using Auth.DEPI.Final.DAL.Entities;
 
 namespace Auth.DEPI.Final.PL.Mapping.InstructorMapping
 {

@@ -1,4 +1,4 @@
-﻿using OnlineLearningPlatform.Models;
+﻿using Auth.DEPI.Final.DAL.Entities;
 
 namespace Auth.DEPI.Final.PL.ViewModels.HomeViewModels
 {

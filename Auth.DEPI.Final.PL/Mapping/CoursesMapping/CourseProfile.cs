@@ -1,6 +1,7 @@
 ﻿using Auth.DEPI.Final.PL.ViewModels.HomeViewModels;
 using AutoMapper;
-using OnlineLearningPlatform.Models;
+using Auth.DEPI.Final.DAL.Entities;
+using Auth.DEPI.Final.PL.ViewModels.InstructorViewModels;
 
 namespace Auth.DEPI.Final.PL.Mapping.CoursesMapping
 {
@@ -9,6 +10,7 @@ namespace Auth.DEPI.Final.PL.Mapping.CoursesMapping
         public CourseProfile()
         {
             CreateMap<Courses, CoursesViewModel>().ReverseMap();
+            CreateMap<Courses, EditDeleteCourseViewModel>().ReverseMap();
         }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using OnlineLearningPlatform.Models;
+using Auth.DEPI.Final.DAL.Entities;
 using System.Diagnostics;
 
 namespace Auth.DEPI.Final.PL.Controllers

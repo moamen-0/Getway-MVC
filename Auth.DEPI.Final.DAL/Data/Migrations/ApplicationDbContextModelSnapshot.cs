@@ -273,9 +273,6 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Price")
-                        .HasColumnType("int");
-
                     b.Property<string>("Thumbnail")
                         .HasColumnType("nvarchar(max)");
 

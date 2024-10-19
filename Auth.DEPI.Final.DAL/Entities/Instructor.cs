@@ -1,7 +1,7 @@
 ﻿using Auth.DEPI.Final.DAL.Entities;
 using System.ComponentModel.DataAnnotations;
 
-namespace OnlineLearningPlatform.Models
+namespace Auth.DEPI.Final.DAL.Entities
 {
     public class Instructor : User
     {

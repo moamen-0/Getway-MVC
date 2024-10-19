@@ -1,6 +1,7 @@
 ﻿using Auth.DEPI.Final.BLL.Interfaces;
 using Auth.DEPI.Final.DAL.Data.Context;
-using OnlineLearningPlatform.Models;
+using Microsoft.EntityFrameworkCore;
+using Auth.DEPI.Final.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,18 @@ namespace Auth.DEPI.Final.BLL.Repository
 {
     public class CoursesRepository : GenericRepository<Courses>, ICourseRepository
     {
+        private readonly ApplicationDbContext _context;
+
         public CoursesRepository(ApplicationDbContext context) : base(context) 
         {
+            _context = context;
+        }
 
+        public async Task<IEnumerable<Courses>> GetInstructorCoursesAsync(string Id)
+        {
+
+          
+            return await _context.Courses.Where(c=>c.InstructorId == Id).ToListAsync();
         }
     }
 }
