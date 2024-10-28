@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 ﻿using OnlineLearningPlatform.Models;
+=======
+﻿    using Auth.DEPI.Final.DAL.Entities;
+using Auth.DEPI.Final.PL.ViewModels.InstructorViewModels;
+>>>>>>> Stashed changes
 
 namespace Auth.DEPI.Final.PL.ViewModels.HomeViewModels
 {
@@ -13,5 +18,11 @@ namespace Auth.DEPI.Final.PL.ViewModels.HomeViewModels
         public string? Thumbnail { get; set; }
         public Instructor Instructor { get; set; }
 
+<<<<<<< Updated upstream
+=======
+        public List<VideoViewModel> Videos { get; set; } = new List<VideoViewModel>();
+    
+}
+>>>>>>> Stashed changes
     }
 }

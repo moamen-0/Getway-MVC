@@ -26,15 +26,16 @@
 		</span>
 	</div>
 
-	<div class="wrap-input100 validate-input" data-validate="Road Map is required">
+	@* <div class="wrap-input100 validate-input" data-validate="Road Map is required">
 		<textarea class="input100  p-l-20 pt-2	" placeholder="Road Map" asp-for="@Model.Roadmap"></textarea>
 		<span class="focus-input100"></span>
 		<span class="symbol-input100">
 		</span>
+	</div> *@
+
+
+	<div asp-validation-summary="All" class="text-danger text-center mt-3">
 	</div>
-
-
-
 
 	<div class="container-login100-form-btn">
 		<input type="submit" value="Signup" class="login100-form-btn" />

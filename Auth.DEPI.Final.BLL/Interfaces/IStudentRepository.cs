@@ -9,6 +9,7 @@ namespace Auth.DEPI.Final.BLL.Interfaces
 {
     public interface IStudentRepository : IGenericRepository<Student>
     {
+        Task<IEnumerable<Student>> GetStudentsByInstructorCoursesAsync(string instructorId, IEnumerable<string> courseIds);
 
     }
 }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OnlineLearningPlatform.Models;
 using System.Diagnostics;
+using Auth.DEPI.Final.PL.ViewModels.InstructorViewModels;
 
 namespace Auth.DEPI.Final.PL.Controllers
 {
@@ -39,16 +40,16 @@ namespace Auth.DEPI.Final.PL.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+
             if (User.IsInRole("Instructor"))
             {
                 // Redirect to the Dashboard action if the user is an Instructor
                 return RedirectToAction("index", "Instructor");
             }
-
+           
             var courses = await _unitOfWork.CourseRepository.GetAllAsync();
             var instructors = await _unitOfWork.InstructorRepository.GetAllAsync();
             var students = await _unitOfWork.StudentRepository.GetAllAsync();
-
             ViewData["InstructorsCount"] = instructors.Count();
             ViewData["CoursesCount"] = courses.Count();
             ViewData["StudentsCount"] = students.Count();
@@ -85,37 +86,47 @@ namespace Auth.DEPI.Final.PL.Controllers
         [HttpGet]
         public async Task<IActionResult> CourseDetails(string Id)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 if (Id is null) return BadRequest();
+
+                // Fetch the course from the repository
                 var course = await _unitOfWork.CourseRepository.GetAsync(Id);
-                if(course is null) return NotFound();
-                var Result = _mapper.Map<CoursesViewModel>(course);
-                
-                
-               if(User.Identity.IsAuthenticated)
-               {
-                    var user = await _userManager.GetUserAsync(User); // Get the logged-in user
+                if (course is null) return NotFound();
 
-                    var student = await _unitOfWork.StudentRepository.GetAsync(user.Id); // Assuming user.Id is the StudentId
+                // Fetch related videos for the course (ensure CourseRepository supports this)
+                var videos = await _unitOfWork.VideoRepository.GetAllCourseVideoAsync(Id);  // Assuming this method exists
 
+                // Map the course to the view model
+                var result = _mapper.Map<CoursesViewModel>(course);
 
+                // Map videos to VideoViewModel and add to the result view model
+                result.Videos = videos.Select(v => new VideoViewModel
+                {
+                    Id = v.Id,
+                    Title = v.Title,
+                    Path = v.Path,
+                    UploadDate = v.UploadDate,
+                    CourseId = v.CourseId
+                }).ToList();
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    var user = await _userManager.GetUserAsync(User);  // Get the logged-in user
+                    var student = await _unitOfWork.StudentRepository.GetAsync(user.Id);  // Assuming user.Id is the StudentId
+
+                    // Check if the student is enrolled in the course
                     var isEnrolled = _context.StudentCourses
-                    .Any(sc => sc.StudentId == student.Id && sc.CourseId == course.Id);
-
+                        .Any(sc => sc.StudentId == student.Id && sc.CourseId == course.Id);
 
                     ViewBag.isEnrolled = isEnrolled;
-                    return View(Result);
+                }
 
-               }
-                return View(Result);
-
+                return View(result);
             }
+
             ModelState.AddModelError(string.Empty, "Something went Wrong");
-
-
             return View();
-           
         }
 
 

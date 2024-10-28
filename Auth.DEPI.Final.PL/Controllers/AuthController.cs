@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using OnlineLearningPlatform.Models;
 using System.Reflection.Metadata;
 using System.Security.Policy;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Claims;
 
 namespace Auth.DEPI.Final.PL.Controllers
 {
@@ -125,7 +127,7 @@ namespace Auth.DEPI.Final.PL.Controllers
 								Email = model.Email,
 								Image = model.ImageName,
 								Bio = model.Bio,
-								Roadmap = model.Roadmap,
+								//Roadmap = model.Roadmap,
 
 
 							};
@@ -179,11 +181,13 @@ namespace Auth.DEPI.Final.PL.Controllers
 						var flag = await _userManager.CheckPasswordAsync(user, model.Password);
 						if (flag)
 						{
-                            var userRoles = await _userManager.GetRolesAsync(user);
-
+                                // Get user roles
+                                var userRoles = await _userManager.GetRolesAsync(user);
+                         
                             var result = await _signInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, false);
                             if (result.Succeeded)
                             {
+                                
                                 if (userRoles is not null)
                                 {
                                     var userRole = userRoles.FirstOrDefault();
@@ -200,6 +204,7 @@ namespace Auth.DEPI.Final.PL.Controllers
                                         }
 										else if (userRole == "Student")
 										{
+                                            
                                             return RedirectToAction("Index", "Home");
                                         }
                                     }
@@ -316,6 +321,7 @@ namespace Auth.DEPI.Final.PL.Controllers
 			ModelState.AddModelError(string.Empty, "Operation Failed Try again !");
 			return View();
 		}
-		#endregion
-	}
+        #endregion
+        public IActionResult AccesDenied() {  return View(); }
+    }
 }

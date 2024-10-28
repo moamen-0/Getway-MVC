@@ -5,6 +5,11 @@ using Auth.DEPI.Final.DAL.Data.Context;
 using Auth.DEPI.Final.DAL.Entities;
 using Auth.DEPI.Final.PL.Mapping.CoursesMapping;
 using Auth.DEPI.Final.PL.Mapping.InstructorMapping;
+<<<<<<< Updated upstream
+=======
+using Auth.DEPI.Final.PL.Mapping.StudentMapping;
+using Auth.DEPI.Final.PL.Mapping.VideoMapping;
+>>>>>>> Stashed changes
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -42,7 +47,13 @@ namespace Auth.DEPI.Final.PL
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             builder.Services.AddAutoMapper(M => M.AddProfile(new CourseProfile()));
+<<<<<<< Updated upstream
             builder.Services.AddAutoMapper(M => M.AddProfile(new InstructorProfile()));
+=======
+           builder.Services.AddAutoMapper(M => M.AddProfile(new InstructorProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new VideoProfile()));
+            builder.Services.AddAutoMapper(M => M.AddProfile(new StudentProfile()));
+>>>>>>> Stashed changes
 
 
             var app = builder.Build();

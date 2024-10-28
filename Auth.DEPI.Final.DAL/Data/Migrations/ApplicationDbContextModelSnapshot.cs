@@ -22,6 +22,54 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Courses", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("int");
+
+                    b.Property<string>("InstructorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Thumbnail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InstructorId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.StudentCourses", b =>
+                {
+                    b.Property<string>("StudentId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CourseId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("StudentId", "CourseId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("StudentCourses");
+                });
+
             modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.User", b =>
                 {
                     b.Property<string>("Id")
@@ -95,6 +143,36 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Video", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CourseId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Path")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UploadDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Video");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -250,6 +328,7 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+<<<<<<< Updated upstream
             modelBuilder.Entity("OnlineLearningPlatform.Models.Courses", b =>
                 {
                     b.Property<string>("Id")
@@ -331,6 +410,8 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                     b.ToTable("Video", (string)null);
                 });
 
+=======
+>>>>>>> Stashed changes
             modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Admin", b =>
                 {
                     b.HasBaseType("Auth.DEPI.Final.DAL.Entities.User");
@@ -338,7 +419,7 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                     b.ToTable("Admins", (string)null);
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Instructor", b =>
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Instructor", b =>
                 {
                     b.HasBaseType("Auth.DEPI.Final.DAL.Entities.User");
 
@@ -346,18 +427,55 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Roadmap")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.ToTable("Instructors", (string)null);
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Student", b =>
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Student", b =>
                 {
                     b.HasBaseType("Auth.DEPI.Final.DAL.Entities.User");
 
                     b.ToTable("Students", (string)null);
+                });
+
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Courses", b =>
+                {
+                    b.HasOne("Auth.DEPI.Final.DAL.Entities.Instructor", "Instructor")
+                        .WithMany("Courses")
+                        .HasForeignKey("InstructorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Instructor");
+                });
+
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.StudentCourses", b =>
+                {
+                    b.HasOne("Auth.DEPI.Final.DAL.Entities.Courses", "Course")
+                        .WithMany("StudentCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Auth.DEPI.Final.DAL.Entities.Student", "Student")
+                        .WithMany("StudentCourses")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Video", b =>
+                {
+                    b.HasOne("Auth.DEPI.Final.DAL.Entities.Courses", "Courses")
+                        .WithMany("Videos")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -411,47 +529,6 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Courses", b =>
-                {
-                    b.HasOne("OnlineLearningPlatform.Models.Instructor", "Instructor")
-                        .WithMany("Courses")
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
-                });
-
-            modelBuilder.Entity("OnlineLearningPlatform.Models.StudentCourses", b =>
-                {
-                    b.HasOne("OnlineLearningPlatform.Models.Courses", "Course")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineLearningPlatform.Models.Student", "Student")
-                        .WithMany("StudentCourses")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("Student");
-                });
-
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Video", b =>
-                {
-                    b.HasOne("OnlineLearningPlatform.Models.Courses", "Courses")
-                        .WithMany("Videos")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Courses");
-                });
-
             modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Admin", b =>
                 {
                     b.HasOne("Auth.DEPI.Final.DAL.Entities.User", null)
@@ -461,37 +538,37 @@ namespace Auth.DEPI.Final.DAL.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Instructor", b =>
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Instructor", b =>
                 {
                     b.HasOne("Auth.DEPI.Final.DAL.Entities.User", null)
                         .WithOne()
-                        .HasForeignKey("OnlineLearningPlatform.Models.Instructor", "Id")
+                        .HasForeignKey("Auth.DEPI.Final.DAL.Entities.Instructor", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Student", b =>
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Student", b =>
                 {
                     b.HasOne("Auth.DEPI.Final.DAL.Entities.User", null)
                         .WithOne()
-                        .HasForeignKey("OnlineLearningPlatform.Models.Student", "Id")
+                        .HasForeignKey("Auth.DEPI.Final.DAL.Entities.Student", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Courses", b =>
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Courses", b =>
                 {
                     b.Navigation("StudentCourses");
 
                     b.Navigation("Videos");
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Instructor", b =>
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Instructor", b =>
                 {
                     b.Navigation("Courses");
                 });
 
-            modelBuilder.Entity("OnlineLearningPlatform.Models.Student", b =>
+            modelBuilder.Entity("Auth.DEPI.Final.DAL.Entities.Student", b =>
                 {
                     b.Navigation("StudentCourses");
                 });

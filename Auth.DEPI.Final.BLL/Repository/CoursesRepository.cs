@@ -14,6 +14,20 @@ namespace Auth.DEPI.Final.BLL.Repository
         public CoursesRepository(ApplicationDbContext context) : base(context) 
         {
 
+<<<<<<< Updated upstream
+=======
+        //public Task<IEnumerable<Student>> GetCourseStudentsAsync(string Id)
+        //{
+        //    _context.Students.Where(S=>S.StudentCourses).
+        //}
+
+        public async Task<IEnumerable<Courses>> GetInstructorCoursesAsync(string Id)
+        {
+
+          
+            return await _context.Courses.Where(c=>c.InstructorId == Id).ToListAsync();
+>>>>>>> Stashed changes
         }
+        
     }
 }
